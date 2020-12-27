@@ -7,15 +7,6 @@ namespace CSharpToPythonConverter.Statements
         private string _statementType;
         private Condition _condition;
 
-        public SelectionStatement(string details)
-        {
-            LoadDetails(details);
-        }
-
-        public SelectionStatement()
-        {
-        }
-
         public void LoadDetails(string details)
         {
             if (details.StartsWith("else")

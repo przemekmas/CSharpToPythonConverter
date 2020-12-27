@@ -1,6 +1,4 @@
 ﻿using CSharpToPythonConverter.Global_Storage;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSharpToPythonConverter.Types
 {

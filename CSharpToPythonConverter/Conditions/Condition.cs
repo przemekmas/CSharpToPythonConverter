@@ -3,7 +3,6 @@
     public class Condition : ICSharpObject
     {
         public string RightValue { get; set; }
-        private string _leftValue;
         private string _logicalCondition;
 
         public Condition(string details)
@@ -44,7 +43,6 @@
                 condition = ">";
             }
 
-            _leftValue = details.Substring(0, details.IndexOf(condition)).Trim();
             var startIndex = details.IndexOf(condition) + condition.Length;
             RightValue = details.Substring(startIndex, details.Length - startIndex).Trim();
             _logicalCondition = details;

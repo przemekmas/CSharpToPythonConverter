@@ -8,22 +8,10 @@ namespace CSharpToPythonConverter.Methods
     public class Method : ICSharpObject
     {
         private string _name;
-        private string _returnType;
         private List<string> _parameters;
-        private string _accessModifier;
-
-        public Method(string details)
-        {
-            LoadDetails(details);
-        }
-
-        public Method()
-        {
-        }
 
         public bool IsMatch(string details)
         {
-            var methodDetail = details.Split(' ');
             var containsAccessModifier = false;
             foreach (var modifier in AccessModifiers.ListOfAccessModifiers)
             {
@@ -34,7 +22,8 @@ namespace CSharpToPythonConverter.Methods
             }
             return details.EndsWith(")")
                 && details.Contains("(")
-                && containsAccessModifier;
+                && (containsAccessModifier
+                || details.Contains("void"));
         }
 
         public string GetPythonEquivalent()
@@ -71,8 +60,6 @@ namespace CSharpToPythonConverter.Methods
 
             if (methodDetail.Any())
             {
-                _accessModifier = methodDetail[0];
-                _returnType = methodDetail[1];
                 _name = methodDetail[2].Substring(0, methodDetail[2].IndexOf("("));
 
                 var startIndex = details.IndexOf("(");

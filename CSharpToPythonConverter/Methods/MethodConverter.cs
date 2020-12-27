@@ -7,6 +7,7 @@ namespace CSharpToPythonConverter.Methods
         public static string Convert(MethodCall method)
         {
             var codeBuilder = new StringBuilder();
+            var appendCode = new StringBuilder();
 
             if (string.Equals(method.FullName, "Console.WriteLine"))
             {
@@ -14,7 +15,9 @@ namespace CSharpToPythonConverter.Methods
             }
             else if (string.Equals(method.FullName, "Console.Write"))
             {
+                LibraryImport.Instance.Add("__future__", "print_function");
                 codeBuilder.Append("print");
+                appendCode.Append("end=''");
             }
             else
             {
@@ -33,7 +36,15 @@ namespace CSharpToPythonConverter.Methods
                 count++;
             }
 
+            if (!string.IsNullOrEmpty(appendCode.ToString()))
+            {
+                codeBuilder.Append(',');
+                codeBuilder.Append(' ');
+                codeBuilder.Append(appendCode.ToString());
+            }
+
             codeBuilder.Append(")");
+            
             return codeBuilder.ToString();
         }
     }

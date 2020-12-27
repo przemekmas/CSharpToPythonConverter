@@ -10,6 +10,7 @@ namespace CSharpToPythonConverter.Processor
         public static void Read(string code)
         {
             var codeBuilder = new StringBuilder();
+            var codeBodyBuider = new StringBuilder();
             var currentIndent = string.Empty;
 
             using (var reader = new StringReader(code))
@@ -23,7 +24,7 @@ namespace CSharpToPythonConverter.Processor
 
                     if (string.IsNullOrEmpty(line))
                     {
-                        codeBuilder.AppendLine();
+                        codeBodyBuider.AppendLine();
                     }
                     if (SetCurrentIndentation(ref currentIndent, line))
                     {
@@ -47,15 +48,15 @@ namespace CSharpToPythonConverter.Processor
                             && cSharpObject.IsMatch(line))
                         {
                             cSharpObject.LoadDetails(line);
-                            codeBuilder.Append(currentIndent);
+                            codeBodyBuider.Append(currentIndent);
                             if (line.StartsWith("//")
                                 || isCommentedOut)
                             {
-                                codeBuilder.Append('#');
+                                codeBodyBuider.Append('#');
                             }
                             
-                            codeBuilder.Append(EvaluateKeywordProcessor.Evaluate(cSharpObject.GetPythonEquivalent()));
-                            codeBuilder.AppendLine();
+                            codeBodyBuider.Append(EvaluateKeywordProcessor.Evaluate(cSharpObject.GetPythonEquivalent()));
+                            codeBodyBuider.AppendLine();
                             foundMatchForLineOfCode = true;
                         }
                     }
@@ -65,14 +66,24 @@ namespace CSharpToPythonConverter.Processor
                         if (line.StartsWith("//")
                             || isCommentedOut)
                         {
-                            codeBuilder.Append('#');
+                            codeBodyBuider.Append('#');
                         }
-                        codeBuilder.Append(currentIndent);
-                        codeBuilder.Append(EvaluateKeywordProcessor.Evaluate(line));
-                        codeBuilder.AppendLine();
+                        codeBodyBuider.Append(currentIndent);
+                        codeBodyBuider.Append(EvaluateKeywordProcessor.Evaluate(line));
+                        codeBodyBuider.AppendLine();
                     }
                 }
             }
+
+            var codeImportBuilder = new StringBuilder();
+
+            foreach (var import in LibraryImport.Instance.GetAllImports())
+            {
+                codeImportBuilder.AppendLine(import);
+            }
+
+            codeBuilder.AppendLine(codeImportBuilder.ToString());
+            codeBuilder.AppendLine(codeBodyBuider.ToString());
 
             Console.WriteLine(codeBuilder.ToString());
         }

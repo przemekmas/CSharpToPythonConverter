@@ -6,11 +6,6 @@ namespace CSharpToPythonConverter.Classes
     {
         private string _name;
 
-        public Class(string details)
-        {
-            LoadDetails(details);
-        }
-
         public Class()
         {
         }

@@ -5,7 +5,6 @@ namespace CSharpToPythonConverter.Types
 {
     public class List : ICSharpObject
     {
-        private string _type;
         private string _name;
         private List<object> _values;
 
@@ -43,10 +42,6 @@ namespace CSharpToPythonConverter.Types
             var startIndex = details.IndexOf(' ');
             var endIndex = details.IndexOf('=');
             _name = details.Substring(startIndex + 1, endIndex - startIndex - 1);
-
-            startIndex = details.IndexOf('<');
-            endIndex = details.IndexOf('>');
-            _type = details.Substring(startIndex + 1, endIndex - startIndex - 1);
 
             startIndex = details.IndexOf("{");
             endIndex = details.IndexOf("}");

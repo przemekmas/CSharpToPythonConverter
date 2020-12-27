@@ -46,6 +46,7 @@
     <Compile Include="Global Storage\AccessModifiers.cs" />
     <Compile Include="Classes\Class.cs" />
     <Compile Include="Conditions\Condition.cs" />
+    <Compile Include="LibraryImport.cs" />
     <Compile Include="Loops\ForEachLoop.cs" />
     <Compile Include="Processor\CSharpCodeReadOperations.cs" />
     <Compile Include="Processor\EvaluateKeywordProcessor.cs" />

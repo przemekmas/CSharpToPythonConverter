@@ -11,15 +11,6 @@ namespace CSharpToPythonConverter.Loops
         private Condition _condition;
         private Operator _operator;
 
-        public ForLoop(string details)
-        {
-            LoadDetails(details);
-        }
-
-        public ForLoop()
-        {
-        }
-
         public void LoadDetails(string details)
         {
             var startIndex = details.IndexOf('(');
@@ -41,23 +32,19 @@ namespace CSharpToPythonConverter.Loops
             codeBuilder.Append("in range");
             codeBuilder.Append(" ");
             codeBuilder.Append("(");
+            codeBuilder.Append(_initializer.Value);
+            codeBuilder.Append(",");
+            codeBuilder.Append(_condition.RightValue);
+            codeBuilder.Append(",");
 
             if (string.Equals(_operator.Type, "++")
                 && string.Equals(_operator.Name, _initializer.Name))
             {
-                codeBuilder.Append(_initializer.Value);
-                codeBuilder.Append(",");
-                codeBuilder.Append(_condition.RightValue);
-                codeBuilder.Append(",");
                 codeBuilder.Append("1");
             }
             else if (string.Equals(_operator.Type, "--")
                 && string.Equals(_operator.Name, _initializer.Name))
             {
-                codeBuilder.Append(_initializer.Value);
-                codeBuilder.Append(",");
-                codeBuilder.Append(_condition.RightValue);
-                codeBuilder.Append(",");
                 codeBuilder.Append("-1");
             }
 

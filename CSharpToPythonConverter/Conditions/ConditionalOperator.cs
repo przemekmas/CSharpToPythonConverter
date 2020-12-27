@@ -4,15 +4,6 @@
     {
         private string _operator;
 
-        public ConditionalOperator(string details)
-        {
-            LoadDetails(details);
-        }
-
-        public ConditionalOperator()
-        {
-        }
-
         public void LoadDetails(string details)
         {
             if (details.Contains("&&")

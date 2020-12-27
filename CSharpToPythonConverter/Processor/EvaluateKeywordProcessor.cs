@@ -25,6 +25,15 @@ namespace CSharpToPythonConverter.Processor
             {
                 modifiedCode = modifiedCode.Replace("*/", "");
             }
+            if (line.Contains("//") 
+                && !line.StartsWith("//")
+                && line.Contains(";"))
+            {
+                var semicolonIndex = line.IndexOf(";");
+                var commentIndex = line.IndexOf("//", semicolonIndex);
+                modifiedCode = modifiedCode.Remove(commentIndex, 2);
+                modifiedCode = modifiedCode.Insert(commentIndex, "#");
+            }
 
             return modifiedCode;
         }
